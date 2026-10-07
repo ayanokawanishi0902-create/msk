@@ -17,7 +17,7 @@ html {
 body, html {
 	margin: 0;
 	padding: 0;
-	background-color: #6e6e97;
+	background-color: #fff;
 	font-family: "Maven Pro", sans-serif;
 }
 .common-container {
@@ -83,24 +83,19 @@ span {
 	========================================================= */
 .header {
 	height: 70px;
-	background: #6e6e97;
+	background: #fff;
 	position: sticky;
 	top: 0;
 	z-index: 100;
 }
 .header a {
-		color: #f4f2e8;
+		color: #000;
 		line-height: 100%;
 }
 .header h1 {
 	font-size: 26px;
-}
-.header h1 span {
-	font-size: 18px;
-	padding-left: 5px;
 	font-weight: 400;
 }
-
 .header-container {
 	display: flex;
 	justify-content: space-between;
@@ -109,7 +104,7 @@ span {
 }
 
 .site {
-	width: 8rem;
+	width: 10rem;
 }
 
 
@@ -122,7 +117,7 @@ span {
 	outline: none;
 	background-color: transparent;
 	cursor: pointer;
-	color: #f4f2e8;
+	color: #000;
 	font-size: 25px;
 }
 
@@ -141,7 +136,7 @@ span {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #f4f2e8; /* 既存のテキスト色に合わせる */
+  background-color: #000000; /* 既存のテキスト色に合わせる */
   transition: all 0.4s; /* アニメーションの速度 */
 }
 
@@ -178,7 +173,7 @@ span {
   right: -100%; /* 画面の右外に飛ばす */
   width: 100%;
   height: calc(100vh - 70px);
-  background: rgba(110, 110, 151, 0.95); /* ヘッダーと同じ色味 */
+  background: rgba(255, 255, 255, 0.9); /* ヘッダーと同じ色味 */
   transition: right 0.3s; /* 動きを滑らかに */
   z-index: 99;
 }
@@ -230,7 +225,7 @@ span {
 }
 @keyframes slideInRight {
     to {
-        opacity: 0.7;
+        opacity:0.9;
         transform: translateX(0);
     }
 }
@@ -241,7 +236,7 @@ span {
     bottom: 15%;
     z-index: 10;
     
-    background-color: #f4f2e8;
+    background-color: #000;
     padding: 10px;
     min-width: 200px;
     text-align: center;
@@ -255,9 +250,12 @@ span {
     font-weight: 900;
     letter-spacing: 0.2em;
     /* 型抜きに見せるため、文字色を背景色と同じにする */
-    color: #6e6e97;
-    display: block;
+    color: #ffffff;
+    display: inline-block;
     line-height: 1;
+}
+.title-bnr span.accent-green {
+  color: #4dff00;
 }
 @keyframes revealUp {
     to { clip-path: inset(0 0 0 0); }
@@ -268,7 +266,7 @@ span {
     bottom: 8%;
     width: 100%;
     text-align: center;
-    color: #f4f2e8;
+    color: #000000;
     font-size: 0.85rem;
     letter-spacing: 0.1em;
     opacity: 0;
@@ -286,12 +284,17 @@ span {
   left: 8%;           /* 画像の左側に配置 */
   bottom: 55%;           /* 画像の横あたりに来るように調整 */
   writing-mode: vertical-rl;
-  color: #f4f2e8;     /* 文字色を白系に */
+  color: #000000;
 	opacity: .6;
   font-size: 1rem;
   letter-spacing: 0.2em;
   z-index: 20;
 	height: auto;
+}
+/* 文字（span）だけを右に3pxずらす */
+.scroll span {
+  display: inline-block;
+  padding-left: 8px;
 }
 
 /* 線のアニメーション部分 */
@@ -304,7 +307,7 @@ span {
   bottom: -130px;     /* 文字の下に配置 */
   width: 1px;
   height: 120px;
-  background-color: #f4f2e8; /* 線の色 */
+  background-color: #000;
 	opacity: .8;
   transform-origin: top;
   animation: scroll 3s infinite;
@@ -334,55 +337,73 @@ span {
 トップページ（サービス内容）
 	========================================================= */
 .service {
-	background-color: #d9d9d9;
-	padding: 40px 30px;
+  position: relative; /* 擬似要素の位置の基準にします */
+  padding: 50px 30px;
   text-align: center;
+  overflow: hidden;   /* 背景のはみ出し防止 */
+}
+/* 背景画像専用のレイヤーを作成 */
+.service::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* 背景画像の設定 */
+  background-image: url("../images/pattern_octopus.webp");
+  background-repeat: repeat;
+  
+  /* モノクロ & 透明度の設定 */
+  filter: grayscale(100%); /* 完全なモノクロ化 */
+  opacity: 0.3;            /* 不透明度 0.3 */
+  
+  z-index: 0;              /* 一番背面に配置 */
 }
 .service h2 {
-  color: #5d5d7e;
+  color: #000000;
 }
 .service-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px 0px;
-  max-width: 800px;
-  margin: 40px auto 50px;
+  list-style: none;
+  padding: 0;
+  margin: 40px auto;
+  display: inline-block; /* 左揃えのリストを中央に寄せる */
+  text-align: left;      /* テキストと黒棒は左揃え */
 }
-@media (min-width:768px) {
-  .service-list {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.service-list li {
+  position: relative;
+  font-family: "Gowun Dodum", sans-serif;
+  color: #000000;
+  margin-bottom: 30px;
+  padding-left: 25px;    /* 黒い縦棒のスペース確保 */
+  display: flex;
+  align-items: center;
+}
+.service-list li::before {
+content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;           /* 縦棒の太さ */
+  height: 24px;          /* 縦棒の高さ */
+  background-color: #000000; /* 黒い長方形 */
 }
 .service-list li a {
-  font-display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  color: #5d5d7e;
-  transition: transform .3s ease;
+  color: #000000;
 }
-.service-list li a:hover {
-  transform: translateY(-5px);
+/* 中身の文字やボタンを背景の上（手前）に表示させる設定 */
+.service > * {
+  position: relative;
+  z-index: 1;
 }
-.service-list li a span {
-  color: #5d5d7e;
-  font-size:.8rem;
-}
-.service-list img {
-  width: 50%;
-  max-width: 120px;
-  height: auto;
-  margin: 0 auto 5px;
-}
-/* ==========「個人の方はこちら」ボタン========== */
-.service-btn {
-  margin-top: 60px;
-}
+
+/* ==========「詳しく見る」ボタン========== */
 .service-btn a {
-  background-color: #f1cbcf;
-  color: #333;
-  padding: 10px 30px;
+  background-color: #4dff00;
+  color: #000000;
+  padding: 5px 15px;
   display: inline-block;
   transition: opacity .3s;
 }
@@ -396,70 +417,16 @@ span {
 	========================================================= */
 .works {
   background-color: #fff; /* 背景は白 */
-  padding: 30px 0;
+  padding: 50px 0;
   text-align: center;
 }
-.works-wrapper {
-  border: 1px solid  #6e6e97;
-  padding: 10px 20px;
-}
 .works h2 {
-  margin-bottom: 20px;
-  color: #5d5d7e;
+  margin-bottom: 40px;
+  color: #000000;
 }
-
-/* グリッド本体:4列8行分割 */
-.works-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(8, 30px); 
-  gap: 10px;
-}
-@media (min-width:768px) {
-  .works-grid {
-    grid-template-rows: repeat(8, 50px);
-    gap: 20px;
-  }
-  .works-wrapper {
-    border: 1px solid  #6e6e97;
-    padding: 50px 80px;
-  }
-}
-.works-grid .item img {
+.works-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-/* 各画像の配置 */
-/* 左側：上 */
-.item1 {
-  grid-column: 1 / 3;
-  grid-row: 1 / 6;
-}
-/* 左側：下 */
-.item6 {
-  grid-column: 1 / 3;
-  grid-row: 6 / 9;
-}
-/* 右側：上 */
-.item2 {
-  grid-column: 3 / 5;
-  grid-row: 1 / 3;
-}
-/* 右側：中央の2つ） */
-.item3 {
-  grid-column: 3 / 4;
-  grid-row: 3 / 5; /* 3行目から開始 */
-}
-.item4 {
-  grid-column: 4 / 5;
-  grid-row: 3 / 5;
-}
-/* 右側：下 */
-.item5 {
-  grid-column: 3 / 5;
-  grid-row: 5 / 9; /* 5行目から開始して、一番下まで長く取る */
+  margin-bottom: 50px;
 }
 /* and more... の位置 */
 .more-link {
@@ -474,10 +441,11 @@ span {
 
 
 /* =========================================================
-トップページ（ABOUT）
+ABOUTページ
 	========================================================= */
-.about {
-  background-color: #a8a8c1;
+.about,
+.message {
+  background-color: #ffffff;
   padding: 40px 30px;
   text-align: center;
   display: flex;
@@ -485,18 +453,67 @@ span {
   align-items: center;
   gap: 20px;
 }
-.about h2 {
-  color: #5d5d7e;
+.about h2,
+.message h2 {
+  color: #000000;
   line-height: 1.2rem;
+}
+.about span.accent-green {
+  color: #4dff00;
 }
 .my-photo {
   background-color: #fff;
+  border: 1px solid #000;
   border-radius: 100%;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
+  overflow: hidden; /* 画像のはみ出しをカット */
+  margin: 10px 0;
+}
+.my-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.about h3 {
+  font-family: "Maven Pro", sans-serif;
+  font-size: 1.5em;
+  font-weight: 400;
+}
+.sub {
+  font-size: .8em;
+}
+/* 経歴リスト（左右並び） */
+.history-list {
+  width: 90%;
+  max-width: 420px; /* スマホ・PCで綺麗に収まる幅 */
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
 }
 
+.history-item {
+  display: grid;
+  grid-template-columns: 40px 1fr; /* 年号の幅を固定し、右側を可変に */
+  gap: 10px;
+  align-items: start;
+  font-size: 0.7em;
+  line-height: 1.7;
+}
 
+.history-item .year {
+  font-family: "Maven Pro", sans-serif;
+  color: #333333;
+  padding-top: 1px; /* テキストの高さ微調整 */
+}
+
+.history-item .detail p {
+  margin: 0;
+  color: #333333;
+}
 
 /* =========================================================
 トップページ（制作の流れ）
@@ -579,7 +596,7 @@ span {
 フッター領域
 	========================================================= */
 .footer {
-  background-color: #6e6e97;
+  background-color: #000000;
   height: 50px;
 }
 .footer-container {
@@ -587,15 +604,16 @@ span {
   margin: 0 auto;
   max-width: 900px;
   text-align: center;
-  color: #d9d9d9;
+  color: #ffffff;
   font-size: .8rem;
   height: 100%;
   position: relative;
 }
 .copyright {
+  font-family: "Maven Pro", sans-serif;
   position: absolute;
   width: 100%;
-  bottom: 10px;
+  bottom: 15px;
 }
 
   /* ==========「TOPに戻る」ボタン========== */
@@ -605,8 +623,8 @@ span {
   bottom: 20px;
   width: 65px;
   height: 65px;
-  background-color: #2b2b3f;
-  color: #f4f2e8;
+  background-color: #000000;
+  color: #ffffff;
   border-radius: 50%;
   transition: opacity 0.5s, visibility 0.5s; /* ふわっとさせる */
   opacity: 0;
@@ -658,24 +676,24 @@ span {
 お問い合わせページ（フォーム）
 	========================================================= */
 .contact-section {
-  padding: 0 20px ;
-  color: #2b2b3f;
+  padding: 40px 30px;
+  color: #000000;
+  background-color: #ededed;
 }
 .contact-wrapper {
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 30px;
-  background-color: #a8a8c1;
-  border-radius: 8px;
+  background-color: #ededed;
 }
 .section-subtitle {
   text-align: center;
-  margin: 20px auto 0;
+  margin: 20px 30px;
   line-height: 1.5rem;
-  font-size: .9rem;
+  font-size: .8rem;
 }
 /* ---------------フォームの入力エリア--------------- */
 #contact label {
+  font-family: "Shippori Mincho", serif;
   font-weight: 500;
 }
 .form-group {
@@ -688,8 +706,8 @@ span {
   margin-bottom: 8px;
 }
 .form-group label span {
-  background: #f8c3cd; /* 必須の印 */
-  color: #fff;
+  background: #4dff00; /* 必須の印 */
+  color: #000;
   font-size: 0.7rem;
   padding: 2px 6px;
   border-radius: 3px;
