@@ -33,3 +33,47 @@ window.addEventListener('scroll', () => {
     backToTop.classList.remove('is-show');
   }
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const workThumbs = document.querySelectorAll('.work-thumb');
+  const modal = document.getElementById('worksModal');
+  if (!modal) return;
+
+  const modalOverlay = modal.querySelector('.modal-overlay');
+  const modalClose = modal.querySelector('.modal-close');
+  const modalImg = document.getElementById('modalImg');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+
+  // 作品タップでモーダルを開く
+  workThumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const imgSrc = thumb.getAttribute('data-img');
+      const title = thumb.getAttribute('data-title');
+      const desc = thumb.getAttribute('data-desc');
+
+      modalImg.src = imgSrc;
+      modalTitle.textContent = title;
+      modalDesc.innerHTML = desc;
+
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden'; // 背後スクロール防止
+    });
+  });
+
+  // モーダルを閉じる
+  const closeModal = () => {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  };
+
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
+});

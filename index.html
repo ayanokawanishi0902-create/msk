@@ -104,24 +104,93 @@
 		<div class="common-container">
 			<h2 class="font-gowun">WORKS</h2>
 			
+	<!-- 作品一覧（縦1列） -->
 			<div class="works-item">
-				<img src="images/TLS_towel.webp" alt="">
-				<img src="images/MW2022_charm.webp" alt="">
-				<img src="images/JH2023_handkerchief.webp" alt="">
-				<img src="images/odessa2024_sticker.webp" alt="">
-				<img src="images/aman2025_omanju.webp" alt="">
-				<img src="images/enoken2025_bag.webp" alt="">
-				<img src="images/MP2026_goods.webp" alt="">
-				<img src="images/LOF2026.webp" alt="">
-				<img src="images/J&H2026_handkerchief.webp" alt="">
+				<div class="work-thumb" 
+						data-img="images/TLS_towel.webp" 
+						data-title="GOODS / Original Towel" 
+						data-desc="ミュージカル『東京ラブストーリー』<br>2022年公演<br>納品先：ホリプロ">
+					<img src="images/TLS_towel.webp" alt="東京ラブストーリー">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/MW2022_charm.webp" 
+						data-title="GOODS / Original Charm" 
+						data-desc="舞台『奇跡の人』<br>2022年公演<br>納品先：ホリプロ">
+					<img src="images/MW2022_charm.webp" alt="MW2022 charm">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/JH2023_handkerchief.webp" 
+						data-title="GOODS / Original Handkerchief" 
+						data-desc="ミュージカル『ジキル＆ハイド』<br>2023年公演<br>納品先：ホリプロ">
+					<img src="images/JH2023_handkerchief.webp" alt="JH2023 handkerchief">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/odessa2024_sticker.webp" 
+						data-title="GOODS / Original Sticker" 
+						data-desc="舞台『オデッサ』<br>2024年公演<br>納品先：ホリプロ">
+					<img src="images/odessa2024_sticker.webp" alt="odessa2024 sticker">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/aman2025_omanju.webp" 
+						data-title="GOODS / Original Sweets&Package" 
+						data-desc="ミュージカル『ある男』<br>2025年公演<br>納品先：ホリプロ">
+					<img src="images/aman2025_omanju.webp" alt="aman2025 omanju">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/enoken2025_bag.webp" 
+						data-title="GOODS / Original Tote Bag" 
+						data-desc="音楽劇『エノケン』<br>2025年公演<br>納品先：ホリプロ">
+					<img src="images/enoken2025_bag.webp" alt="enoken2025 bag">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/MP2026_goods.webp" 
+						data-title="ILLUSTRATION / Original Illustration" 
+						data-desc="ミュージカル『メリー・ポピンズ』<br>2026年公演<br>納品先：ホリプロ">
+					<img src="images/MP2026_goods.webp" alt="MP2026 goods">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/LOF2026.webp" 
+						data-title="GOODS / Original Pouch" 
+						data-desc="ミュージカル『奇跡を呼ぶ男』<br>2026年公演<br>納品先：ホリプロ">
+					<img src="images/LOF2026.webp" alt="LOF2026">
+				</div>
+
+				<div class="work-thumb" 
+						data-img="images/J&H2026_handkerchief.webp" 
+						data-title="GOODS / Original Handkerchief" 
+						data-desc="ミュージカル『ジキル&ハイド』<br>2026年公演<br>納品先：ホリプロ">
+					<img src="images/J&H2026_handkerchief.webp" alt="J&H2026 handkerchief">
+				</div>
 			</div>
 
 			<div class="more-link">
 				<a href="#" class="font-gowun">and more...</a>
 			</div>
+
 		</div>
 	</section>
-	
+
+	<!-- ★モーダル用HTML -->
+	<div class="modal" id="worksModal">
+		<div class="modal-overlay"></div>
+		<div class="modal-content">
+			<button class="modal-close" aria-label="閉じる">&times;</button>
+			<div class="modal-image-wrap">
+				<img id="modalImg" alt="">
+			</div>
+			<div class="modal-body">
+				<h3 id="modalTitle" class="font-gowun"></h3>
+				<p id="modalDesc" class="font-shippori"></p>
+			</div>
+		</div>
+	</div>
 
 
 		<!-- ＊＊＊＊＊＊＊＊＊＊＊＊制作の流れ＊＊＊＊＊＊＊＊＊＊＊＊ -->
