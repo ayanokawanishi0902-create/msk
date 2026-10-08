@@ -35,6 +35,7 @@ window.addEventListener('scroll', () => {
 });
 
 
+//==================== 作品モーダル表示　===============
 document.addEventListener('DOMContentLoaded', () => {
   const workThumbs = document.querySelectorAll('.work-thumb');
   const modal = document.getElementById('worksModal');
@@ -46,23 +47,118 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
 
-  // 作品タップでモーダルを開く
+  const sliderWrap = modal.querySelector('.modal-slider-wrap');
+  const btnPrev = document.getElementById('sliderPrev');
+  const btnNext = document.getElementById('sliderNext');
+  const dotsContainer = document.getElementById('sliderDots');
+
+  let currentImages = [];
+  let currentIndex = 0;
+
+  // 指定インデックスの画像を表示・表示更新
+  const updateSlide = (index) => {
+    currentIndex = index;
+    modalImg.style.opacity = '0';
+    setTimeout(() => {
+      modalImg.src = currentImages[currentIndex];
+      modalImg.style.opacity = '1';
+    }, 150);
+
+    // ドットの更新
+    const dots = dotsContainer.querySelectorAll('.slider-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('is-active', idx === currentIndex);
+    });
+  };
+
+  // 作品タップ時
   workThumbs.forEach(thumb => {
     thumb.addEventListener('click', () => {
-      const imgSrc = thumb.getAttribute('data-img');
+      const rawImg = thumb.getAttribute('data-img') || '';
+      currentImages = rawImg.split(',').map(s => s.trim()).filter(Boolean);
+      currentIndex = 0;
+
       const title = thumb.getAttribute('data-title');
       const desc = thumb.getAttribute('data-desc');
 
-      modalImg.src = imgSrc;
+      // 1枚のみの場合は矢印やドットを隠す
+      if (currentImages.length <= 1) {
+        sliderWrap.classList.add('single-image');
+      } else {
+        sliderWrap.classList.remove('single-image');
+      }
+
+      // ドット生成
+      dotsContainer.innerHTML = '';
+      currentImages.forEach((_, idx) => {
+        const dot = document.createElement('span');
+        dot.classList.add('slider-dot');
+        if (idx === 0) dot.classList.add('is-active');
+        dot.addEventListener('click', () => updateSlide(idx));
+        dotsContainer.appendChild(dot);
+      });
+
+      modalImg.src = currentImages[0] || '';
       modalTitle.textContent = title;
       modalDesc.innerHTML = desc;
 
       modal.classList.add('is-open');
-      document.body.style.overflow = 'hidden'; // 背後スクロール防止
+      document.body.style.overflow = 'hidden';
     });
   });
 
-  // モーダルを閉じる
+
+  // ==========================================
+  // スマホ用スワイプ（フリック）操作の実装
+  // ==========================================
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const imageWrap = modal.querySelector('.modal-image-wrap');
+
+  // タッチ開始時のX座標を取得
+  imageWrap.addEventListener('touchstart', (e) => {
+    if (currentImages.length <= 1) return; // 1枚のみの場合は処理しない
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  // タッチ終了時のX座標を取得して判定
+  imageWrap.addEventListener('touchend', (e) => {
+    if (currentImages.length <= 1) return; // 1枚のみの場合は処理しない
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  // スワイプ方向の判定とスライド移動
+  const handleSwipe = () => {
+    const swipeThreshold = 40; // スワイプと判定する最小距離（px）
+
+    // 左へスワイプ（次の画像へ）
+    if (touchStartX - touchEndX > swipeThreshold) {
+      const newIndex = (currentIndex + 1) % currentImages.length;
+      updateSlide(newIndex);
+    }
+
+    // 右へスワイプ（前の画像へ）
+    if (touchEndX - touchStartX > swipeThreshold) {
+      const newIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      updateSlide(newIndex);
+    }
+  };
+
+
+  // 矢印ボタンイベント
+  btnPrev.addEventListener('click', () => {
+    const newIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    updateSlide(newIndex);
+  });
+
+  btnNext.addEventListener('click', () => {
+    const newIndex = (currentIndex + 1) % currentImages.length;
+    updateSlide(newIndex);
+  });
+
+  // 閉じる処理
   const closeModal = () => {
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
@@ -72,8 +168,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
 
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-      closeModal();
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft' && currentImages.length > 1) {
+      const newIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      updateSlide(newIndex);
+    }
+    if (e.key === 'ArrowRight' && currentImages.length > 1) {
+      const newIndex = (currentIndex + 1) % currentImages.length;
+      updateSlide(newIndex);
     }
   });
 });

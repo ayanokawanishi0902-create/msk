@@ -519,10 +519,15 @@ content: "";
   cursor: pointer;
   line-height: 1;
   padding: 5px;
+  z-index: 20;
+}
+/* モーダル画像スライダー囲み */
+.modal-slider-wrap {
+  position: relative;
+  margin-bottom: 25px;
 }
 
 .modal-image-wrap {
-  margin-bottom: 25px;
   background-color: #f4f4f4;
   padding: 15px;
 }
@@ -533,6 +538,84 @@ content: "";
   object-fit: contain;
   display: block;
   margin: 0 auto;
+  transition: opacity 0.25s ease;
+}
+
+/* 左右スライド矢印ボタン */
+.slider-prev,
+.slider-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  font-size: 1.8rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, opacity 0.2s;
+  line-height: 1;
+}
+
+.slider-prev { left: 5px; }
+.slider-next { right: 5px; }
+
+.slider-prev:hover,
+.slider-next:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/*    スマホ表示用スタイル（768px以下） */
+@media (max-width: 768px) {
+  /* スマホの時は左右の矢印ボタンを非表示 */
+  .slider-prev,
+  .slider-next {
+    display: none !important;
+  }
+
+  /* タッチ操作可能なことを示すスタイル */
+  .modal-image-wrap {
+    touch-action: pan-y; /* 縦スクロールは許可しつつ横スワイプを検知 */
+    user-select: none;   /* 画像の長押し選択・保存動作による誤動作を防止 */
+    -webkit-user-drag: none;
+  }
+}
+
+
+
+/* 画像が1枚のときは矢印・ドットを非表示にするクラス */
+.modal-slider-wrap.single-image .slider-prev,
+.modal-slider-wrap.single-image .slider-next,
+.modal-slider-wrap.single-image .slider-dots {
+  display: none !important;
+}
+
+/* ドットナビゲーション */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.slider-dot.is-active {
+  background-color: #4dff00;
+  transform: scale(1.2);
 }
 
 .modal-body h3 {
